@@ -14,20 +14,24 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
+      # Step 1: Get the GitHub repository code
       - name: Checkout source code
         uses: actions/checkout@v4
 
+      # Step 2: Install Salesforce CLI
       - name: Install Salesforce CLI
         run: |
           npm install --global @salesforce/cli
           sf --version
 
+      # Step 3: Authenticate with Salesforce Developer Org
       - name: Authenticate Salesforce
         env:
           SF_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
         run: |
-          printf '%s' "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias DevOrg
+          printf '%s' "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --set-default
 
+      # Step 4: Validate Salesforce metadata deployment
       - name: Validate Salesforce deployment
         run: |
           sf project deploy start \
