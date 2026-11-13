@@ -1,5 +1,5 @@
 public class accountTriggerHandler {
-// test
+//  Updated using feature branch
     public static void updateDescription(List<account>listOfAccount,Map<Id,Account>mapOfAccount)
     {
         for(account acc : listOfAccount)
