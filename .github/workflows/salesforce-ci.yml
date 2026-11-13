@@ -1,0 +1,38 @@
+
+name: Salesforce CI/CD
+
+on:
+  pull_request:
+    branches:
+      - main
+
+permissions:
+  contents: read
+
+jobs:
+  validate-salesforce:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout source code
+        uses: actions/checkout@v4
+
+      - name: Install Salesforce CLI
+        run: |
+          npm install --global @salesforce/cli
+          sf --version
+
+      - name: Authenticate Salesforce
+        env:
+          SF_AUTH_URL: ${{ secrets.SFDX_AUTH_URL }}
+        run: |
+          printf '%s' "$SF_AUTH_URL" | sf org login sfdx-url --sfdx-url-stdin --alias DevOrg
+
+      - name: Validate Salesforce deployment
+        run: |
+          sf project deploy start \
+            --source-dir force-app \
+            --target-org DevOrg \
+            --dry-run \
+            --test-level NoTestRun \
+            --wait 30
