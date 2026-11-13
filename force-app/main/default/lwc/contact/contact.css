@@ -1,0 +1,15 @@
+.border1{
+    border: 1px solid rgb(14, 109, 203);
+    padding: 10px;
+    margin: 5px;
+    background-color: aqua;
+    color: black;
+}
+
+.border2{
+    border: 1px solid rgb(14, 109, 203);
+    padding: 10px;
+    margin: 5px;
+    background-color: rgb(155, 234, 161);
+    color: black;
+}
